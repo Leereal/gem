@@ -18,14 +18,7 @@ class BankDetail extends Model
         return $this->belongsTo('App\Models\Bank');
     }
 
-    /**
-     * Get the auction for this bank detail.
-     */
-    public function auction()
-    {
-        return $this->hasOne('App\Models\Auction');
-    }
-
+    
     /**
      * Get the user for this bank detail.
      */

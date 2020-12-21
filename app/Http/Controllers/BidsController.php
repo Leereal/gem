@@ -45,150 +45,42 @@ class BidsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-        $request->validate([
-            'balance'             => 'required|max:10|between:0,99.99|',
-            'amount'              => 'required|max:10|between:0,99.99|lte:balance|gt:0',
-            'auction'             => 'required|integer',  
-            'plan'                => 'required|integer',
+    {  
+        $request->validate([         
+            'pop'               => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'amount'            => 'required|max:10|between:0,99.99|gt:0',
+            'payment_method'    => 'required|integer',  
+            'plan'              => 'required|integer',
         ]);
+       
         $user = auth()->user();      
-        $min_amount = 250;
-        $max_amount = 15000;
-        
-        $auction= Auction::where('id',$request->auction)->first();
-        $auction_balance = $auction->balance;
+        $min_amount = 20;
+        $max_amount = 20000;
 
-        if($auction_balance < $request->amount)
-        {
-            return redirect()->back()->withErrors('No longer available');
-        }
-
-        //Get current users bids older than today
-        $user_previous_unpaid_bids = $user->bids()->whereDate('created_at', '<', Carbon::today())->whereIn('status', [2, 101])->get()->count();
-
-        //Get total offers for today
-        $user_today_total = $user->bids()->whereDate('created_at', '=', Carbon::today())->whereIn('status', [2, 101])->get()->sum('amount');
-
-        //Get count number of todays transactions for user 
-        $user_today_bids = $user->bids()->whereDate('created_at', '=', Carbon::today())->whereIn('status', [2, 101])->get()->count();
-
-        if ($min_amount <= $request->amount && $max_amount >= $request->amount) {
-            //Check if user has offers not yet approved
-            if ($user_previous_unpaid_bids > 0) {               
-                return redirect()->back()->withErrors('Please pay your previous bids first');
-            }
-            // //Check if user has not exceeded maximum daily transactions
-            if ($user_today_bids >= 3) {                
-                return redirect()->back()->withErrors('Daily transaction limit reached');
-            }
-            // //Check if user has not reached daily limit
-            if (($user_today_total + $request->amount) > $max_amount) {
-                return redirect()->back()->withErrors('Daily transaction limit reached try smaller amount');
-            }
-            // //Check if remaining amount can be placed on auction again
-            if (($auction_balance- $request->amount < $min_amount) && (($auction_balance - $request->amount) != 0) ) {
-                return redirect()->back()->withErrors('Please take the whole amount on this lot');
-            } else {
+        if ($min_amount <= $request->amount && $max_amount >= $request->amount) { 
+            $imageName = time().'.'.$request->pop->extension(); 
+            $request->pop->move(public_path('images/pop'), $imageName);    
                 try {
                     DB::beginTransaction();
                     $bid                          = new Bids;
-                    $bid->amount                  = $request->amount;
-                    $bid->auction_id              = $request->auction;  
-                    $bid->bank_id                 = $auction->bank_detail->bank->id;              
+                    $bid->amount                  = $request->amount;   
+                    $bid->bank_id                 = $request->payment_method;              
                     $bid->plan_id                 = $request->plan;                    
-                    $bid->user_id                 = $user->id;                   
-                    $bid->expiration_time         = Carbon::now()->addHours(12);
+                    $bid->user_id                 = $user->id;
+                    $bid->pop                     = $imageName;
                     $bid->ipaddress               = request()->ip();
-                    $bid->save();
-
-                    $balance = Auction::where('id',$request->auction)->first()->balance;
-                    //Get auction and then reduce its value by amount offered by current user
-                    $current_auction = Auction::findOrFail($request->auction);
-                    if ($request->amount == $balance) {
-                        $current_auction->balance -= $request->amount;
-                        $current_auction->status   = 100;
-                    } else {
-                        $current_auction->balance -= $request->amount;
-                    }
-                    $current_auction->save();
+                    $bid->save();                   
                     DB::commit();
-                    return redirect()->back()->with('message', 'Bid placed. Please make payment');
+                    return redirect()->back()->with('message', 'Payment submitted please wait for approval or contact support speed up the process');
 
                 } catch (\Exception $e) {
                     DB::rollback();
                     throw $e;
-                }
-            }
+                }  
         } else {
-            return redirect()->back()->withErrors('Amount must be between minimum and maximum daily limit');
+            return redirect()->back()->withErrors('Amount must be between minimum and maximum limit');
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Bids  $bids
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Bids $bids)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Bids  $bids
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Bids $bids)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Bids  $bids
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Bids $bids)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Bids  $bids
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Bids $bids)
-    {
-        //
-    }
-
-    public function make_payment(Request $request)
-    {  
-        $request->validate([
-            'bid'                  => 'required|integer',
-            'pop' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-        if ($request->hasFile('pop')) {            
-            $imageName = time().'.'.$request->pop->extension(); 
-            $request->pop->move(public_path('images/pop'), $imageName);         
-
-            $make_payment            = Bids::findOrFail($request->bid);
-            $make_payment->id        = $request->bid;     
-            $make_payment->pop       = $imageName;
-            $make_payment->status    = 101;
-            $make_payment->save();            
-            return redirect()->back()->with('message', 'Payment done');
-        }
-    }
-     
     public function approve(Request $request)
     {
         $request->validate([
@@ -203,12 +95,6 @@ class BidsController extends Controller
 
         //Get receiver details
         $receiver = User::where('id', $bid->user_id)->with('referrer')->first();
-
-        // //Get referrer or upliner of the receiver
-        // $referrer = User::where('id',$pending_payment->user_id)->with('currency')->first();
-
-        // //Check if user was referred
-        // $referrer   = User::find($pending_payment->user_id)->referrer_id;
 
         $amount = $bid->amount;
         $expected_profit = $amount + ($plan->interest / 100 * $amount);

@@ -5,18 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'E-Coince') }}</title>
-
-          <!--  Social tags      -->
-        <meta name="keywords" content="Online Auction, ECoince, E-coince, Make Money Online, Bid Auction, Hyip, Investment, Invest, Bitcoin">
-        <meta name="description" content="E-COINCE is an online peer to peer platform in which members buy and sell their virtual currency called COINS , 1 COIN is equivalent to 1ZAR.">
-        <!-- Twitter Card data -->
-        <meta name="twitter:card" content="investment">
-        <meta name="twitter:site" content="@ecoince">
-        <meta name="twitter:title" content="ECoince">
-        <meta name="twitter:description" content="E-COINCE is an online peer to peer platform in which members buy and sell their virtual currency called COINS , 1 COIN is equivalent to 1ZAR.">
-        <meta name="twitter:creator" content="e-coince">
-        <meta name="twitter:image" content="https:e-coince.com"> 
+        <title>{{ config('app.name', 'iFxgem') }}</title>
+        
         <!--     Fonts and icons     -->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
@@ -46,7 +36,7 @@
                         <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
                     </a>
                     <a href="https://e-coince.com" class="simple-text logo-normal">
-                        E-COINCE
+                        iFxgem
                     </a>
                 </div>
                 <div class="sidebar-wrapper">
@@ -81,9 +71,9 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" href="/auction">
+                            <a class="nav-link" href="/investment">
                                 <i class="material-icons">account_balance</i>
-                                <span class="sidebar-normal"> Auction </span>
+                                <span class="sidebar-normal"> Invest </span>
                             </a>
                         </li>
                         <li class="nav-item ">
@@ -91,17 +81,11 @@
                                 <i class="material-icons">account_balance_wallet</i>
                                 <span class="sidebar-normal"> My Investments </span>
                             </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="/bids">
-                                <i class="material-icons">payments</i>
-                                <span class="sidebar-normal">Bids</span>
-                            </a>
-                        </li>
+                        </li>                       
                         <li class="nav-item ">
                             <a class="nav-link" href="/bank-details">
                                 <i class="material-icons">developer_board</i>
-                                <span class="sidebar-normal"> Bank Details </span>
+                                <span class="sidebar-normal"> Payment Details </span>
                             </a>
                         </li>
                         <li class="nav-item ">
@@ -201,66 +185,11 @@
                             &copy;
                             <script>
                                 document.write(new Date().getFullYear())
-                            </script>, made with <i class="material-icons">favorite</i> by E-COINCE
+                            </script>, Powered By iFxgem
                         </div>
                     </div>
                 </footer>
             </div>
-        </div>
-        <div class="fixed-plugin">
-            <div class="dropdown show-dropdown">
-                <a href="#" data-toggle="dropdown">
-                    <i class="fa fa-cog fa-2x"> </i>
-                </a>
-                <ul class="dropdown-menu">
-                    <li class="header-title"> Sidebar Filters</li>
-                    <li class="adjustments-line">
-                        <a href="javascript:void(0)" class="switch-trigger active-color">
-                            <div class="badge-colors ml-auto mr-auto">
-                                <span class="badge filter badge-purple" data-color="purple"></span>
-                                <span class="badge filter badge-azure" data-color="azure"></span>
-                                <span class="badge filter badge-green" data-color="green"></span>
-                                <span class="badge filter badge-warning" data-color="orange"></span>
-                                <span class="badge filter badge-danger" data-color="danger"></span>
-                                <span class="badge filter badge-rose active" data-color="rose"></span>
-                            </div>
-                            <div class="clearfix"></div>
-                        </a>
-                    </li>
-                    <li class="header-title">Sidebar Background</li>
-                    <li class="adjustments-line">
-                        <a href="javascript:void(0)" class="switch-trigger background-color">
-                            <div class="ml-auto mr-auto">
-                                <span class="badge filter badge-black active" data-background-color="black"></span>
-                                <span class="badge filter badge-white" data-background-color="white"></span>
-                                <span class="badge filter badge-red" data-background-color="red"></span>
-                            </div>
-                            <div class="clearfix"></div>
-                        </a>
-                    </li>
-                    <li class="adjustments-line">
-                        <a href="javascript:void(0)" class="switch-trigger">
-                            <p>Sidebar Mini</p>
-                            <label class="ml-auto">
-                                <div class="togglebutton switch-sidebar-mini">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="toggle"></span>
-                                    </label>
-            </div>
-            </label>
-            <div class="clearfix"></div>
-            </a>
-            </li>
-            <li class="adjustments-line">
-                <a href="javascript:void(0)" class="switch-trigger">
-                    <p>Sidebar Images</p>
-                    <label class="switch-mini ml-auto">
-                                <div class="togglebutton switch-sidebar-image">
-                                    <label>
-                                        <input type="checkbox" checked="">
-                                        <span class="toggle"></span>
-                                    </label>
         </div>
         </label>
         <div class="clearfix"></div>
@@ -591,15 +520,15 @@
         </script>
         <!--Start of Tawk.to Script-->
     <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/5fb87fe0920fc91564c925b1/default';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/5fdca521a8a254155ab488f6/1epqua98j';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
     </script>
     <!--End of Tawk.to Script-->
     </body>

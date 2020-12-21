@@ -9,24 +9,18 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     public function index(){
-        $user = Auth::user();
-        $is_open = Setting::find(1)->value('auction_status');        
+        $user = Auth::user();          
         $total_balance          = $user->investments()->where('status', '>', 0)->get()->sum('balance');
         $total_mature           = $user->investments()->where('investments.status', '=', 1)->get()->sum('amount');
         $total_referrals        = $user->referrals()->get()->count();
         $total_bonus            = $user->bonuses()->where('bonuses.status', '>', 0)->get()->sum('amount');
 
-        //Get bids which needs approval
-        $payments = $user->pending_payments()->whereIn('bids.status',[101,2])->get();
 
-
-        return view('dashboard',[
-            'is_open'=>$is_open,
+        return view('dashboard',[     
             'balance' => number_format($total_balance, 2),
             'mature'  => number_format($total_mature, 2),           
             'referrals'  =>$total_referrals,           
-            'bonus'  => number_format($total_bonus, 2),
-            'payments' =>$payments
+            'bonus'  => number_format($total_bonus, 2)
             ]);  
     }
 }

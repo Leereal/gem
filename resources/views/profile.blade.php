@@ -57,7 +57,7 @@
               </a>
             </div>
             <div class="card-body">
-              <h6 class="card-category text-gray">E-COINCE Member</h6>
+              <h6 class="card-category text-gray">iFxgem Member</h6>
               <h4 class="card-title"> {{Auth::user()->username}}</h4>
               <p class="card-description">
                 Joined :  {{Auth::user()->created_at}}

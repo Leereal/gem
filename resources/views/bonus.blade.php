@@ -23,7 +23,7 @@
                   <tr>
                     <td>{{$bonus->created_at}}</td> 
                     <td>{{$bonus->amount}}</td>
-                    <td>{{$bonus->investment->amount}}</td>
+                    <td>${{$bonus->investment->amount}}</td>
                     <td>{{$bonus->investment->user->username}}</td>
                     <td>{{$bonus->status}}</td>             
                   </tr>

@@ -55,14 +55,7 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Bonus');
     }
-
-    //Auction Relationship
-    public function auctions()
-    {
-        return $this->hasMany('App\Models\Auction');
-    }
-
- 
+  
      //A user has a referrer.
   
     public function referrer()
@@ -76,14 +69,7 @@ class User extends Authenticatable
     public function referrals()
     {
         return $this->hasMany(User::class, 'referrer_id', 'id');
-    }
-    
-    //Pending Bids Relationship
-    public function pending_payments()
-    {
-        return $this->hasManyThrough('App\Models\Bids', 'App\Models\Auction');
-    }
-
+    }  
     //Bids Relationship
     public function bids()
     {

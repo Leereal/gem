@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bank;
 use App\Models\Investment;
+use App\Models\Plan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +30,9 @@ class InvestmentController extends Controller
      */
     public function create()
     {
-        //
+        $plans = $plans = Plan::all();
+        $banks = Bank::all();
+        return view('invest',['plans'=>$plans, 'banks'=>$banks]);
     }
 
     /**

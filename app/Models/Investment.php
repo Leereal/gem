@@ -33,10 +33,4 @@ class Investment extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
-
-    //Auction Relationship
-    public function auctions()
-    {
-        return $this->hasMany('App\Models\Auction');
-    }   
 }

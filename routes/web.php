@@ -23,9 +23,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [RegisteredUserController::class, 'create']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
@@ -52,12 +50,12 @@ Route::group(['middleware' => 'auth'], function() {
     'bank-details'  => BankDetailController::class,
     'investments'   => InvestmentController::class,
     'bids'          => BidsController::class,
-    'bonus'         => BonusController::class,
-    'auction'       => AuctionController::class,
+    'bonus'         => BonusController::class,  
 ]);
 });
 
 Route::post('/make-payment', [BidsController::class, 'make_payment'])->middleware(['auth']);
 Route::post('/approve', [BidsController::class, 'approve'])->middleware(['auth']);
+Route::get('/investment', [InvestmentController::class, 'create'])->middleware(['auth']);
 
 

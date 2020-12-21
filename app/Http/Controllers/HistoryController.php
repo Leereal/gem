@@ -17,9 +17,6 @@ class HistoryController extends Controller
         //Get Bonus
         $bonuses = Auth::user()->bonuses()->where('status',0)->get();
 
-        //Get Auction
-        $auctions = Auth::user()->auctions()->where('status',0)->get();
-
-        return view('history',['investments'=>$investments, 'bids'=>$bids, 'bonuses'=>$bonuses, 'auctions'=>$auctions]);              
+        return view('history',['investments'=>$investments, 'bids'=>$bids, 'bonuses'=>$bonuses]);              
     }
 }
